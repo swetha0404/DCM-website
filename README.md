@@ -2,7 +2,7 @@
 
 ## 🔍 Object Detection Dashboard — Fullstack MERN App
 
-A fullstack web application built with the MERN stack to allow authenticated users to upload images and run **real-time object detection** directly in the browser. The website mimics core my work done during an internship at **DCM Datalabs**, demonstrating hands-on experience in authentication, file handling, S3 storage, and computer vision with TensorFlow.js.
+A fullstack web application built with the MERN stack to allow authenticated users to upload images and run **real-time object detection** directly in the browser. The website mimics core my work done during an internship at **DCM Datalabs**, demonstrating hands-on experience in UI/UX design, React.js, NoSQL, Node.js, AWS Services, and computer vision with TensorFlow.js.
 
 ---
 
