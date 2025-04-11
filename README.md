@@ -94,4 +94,4 @@ Backend API: [http://localhost:5000](http://localhost:5000)
 
 ## 💡
 
-Made by Swetha Elayavalli to replicate object detection work done at DCM Datalabs.
+Made by Swetha Malaivaiyavur Elayavalli to replicate object detection work done at DCM Datalabs.
