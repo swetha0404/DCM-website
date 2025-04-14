@@ -4,7 +4,10 @@ import path from "path";
 import cors from "cors";
 import { connectDB } from "./config/db.js";
 import userRoutes from "./routes/user.routes.js";
+import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 dotenv.config();
 
 // console.log("BUCKET from ENV:", process.env.AWS_S3_BUCKET);

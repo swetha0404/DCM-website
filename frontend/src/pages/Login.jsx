@@ -12,7 +12,8 @@ import { Avatar,
     Text,
     Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton,
     VStack,
-    useDisclosure, useToast} from '@chakra-ui/react'
+    useDisclosure, useToast,
+    HStack} from '@chakra-ui/react'
 
 import bg_image from '../assets/RADAR.png';
 import {FaUserCircle, FaEye, FaEyeSlash } from "react-icons/fa";
@@ -40,6 +41,12 @@ function Login() {
 
         // modal open/close states
         const {isOpen, onOpen, onClose} = useDisclosure();
+
+        const {
+            isOpen: isInfoOpen,
+            onOpen: onInfoOpen,
+            onClose: onInfoClose
+          } = useDisclosure();
         
         // showing/hiding password functionalities
         const [showPassword1, setShowPassword1] = useState(false);
@@ -177,15 +184,15 @@ function Login() {
                 >
             
             <Stack  
-                    alignItems="center"
-                    backgroundColor={'lightgrey'}
-                    borderRadius={'20px'}
-                    p={8}
-                    _hover={{transform: "translateY(-5px)", shadow:"xl"}}
-                    transition={"all 0.3s"}
-                    shadow={"lg"}
-                    >
-
+                alignItems="center"
+                backgroundColor={'lightgrey'}
+                borderRadius={'20px'}
+                p={8}
+                _hover={{transform: "translateY(-5px)", shadow:"xl"}}
+                transition={"all 0.3s"}
+                shadow={"lg"}
+                >
+                
                 <Avatar icon={<FaUserCircle fontSize='3.5rem' color="black"/>} />
                 <Heading color={"black"}> Welcome </Heading>
                 
@@ -382,6 +389,48 @@ function Login() {
                             </Stack>
                         </form>
                     </VStack>
+                </ModalBody >
+
+            </ModalContent>
+
+        </Modal>
+        <Modal 
+                isOpen = {isInfoOpen} 
+                onClose={onInfoClose} 
+                blockScrollOnMount= {false}
+                transition={"all 0.5s"}
+                isCentered
+                >
+            <ModalOverlay   
+                    backdropFilter="blur(10px)"
+                            
+                    />
+            
+            <ModalContent   
+                            maxW= {'fit-content'}
+                            alignItems={'center'} 
+                            bg={"lightgrey"} 
+                            borderRadius={'20px'}
+                            fontFamily={'Montserrat, sans-serif'}
+                            >
+                <ModalCloseButton 
+                        color={'black'}
+                        size={'md'}
+                                    
+                                    />
+                <ModalHeader>
+                        <Text 
+                            fontWeight={'bold'} 
+                            fontSize={'1.2em'}
+                            color={'black'}
+                            > 
+                            Information about this website
+                        </Text>
+                </ModalHeader>
+                
+
+                <ModalBody >
+                    
                 </ModalBody >
 
             </ModalContent>
