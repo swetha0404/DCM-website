@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.14.0",
     "@tensorflow-models/coco-ssd": "^2.2.3",
     "@tensorflow/tfjs": "^4.22.0",
+    "dcm-website": "file:..",
     "framer-motion": "^12.6.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
