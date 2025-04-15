@@ -1,42 +1,47 @@
-import {
-  Box, Button, FormControl, FormLabel, Heading, HStack, IconButton, Image,
-  Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter,
-  ModalHeader, ModalOverlay, Text, Tooltip, useDisclosure, useToast, VStack
-} from "@chakra-ui/react";
 import { useRef, useState, useEffect } from "react";
+
+import {  Box, Button, 
+          FormControl, FormLabel, Flex,
+          Heading, HStack, 
+          IconButton, Image, Input, 
+          Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, 
+          Text, Tooltip, 
+          useDisclosure, useToast, 
+          VStack
+} from "@chakra-ui/react";
+
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { HiUpload } from "react-icons/hi";
 import obj_logo from "../assets/obj_detect_logo.png";
+
 import { deleteImage, updateImageName, updateImageFile } from "../services/authService.js";
-import ObjectDetection from "./ObjectDetection.jsx";
 import { uploadDetectionResult } from "../services/imageService.js";
+import ObjectDetection from "./ObjectDetection.jsx";
+
 
 const ImageCard = ({ image, refreshImages }) => {
   const token = sessionStorage.getItem("token");
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const {
-    isOpen: isDetectOpen,
-    onOpen: onDetectOpen,
-    onClose: onDetectClose
-  } = useDisclosure();
-
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {isOpen: isDetectOpen, onOpen: onDetectOpen, onClose: onDetectClose} = useDisclosure();
+
   const [currentImage, setCurrentImage] = useState(image);
   useEffect(() => {
     if (isDetectOpen) {
-      // find updated image from parent
+    // find updated image from parent
       setCurrentImage(prev => {
         return refreshImages
-          ? refreshImages().then(() => {
-              const updated = JSON.parse(sessionStorage.getItem("userImages"))?.find(img => img.name === image.name);
-              return updated || image;
-            })
-          : image;
+        ? refreshImages().then(() => {
+          const updated = JSON.parse(sessionStorage.getItem("userImages"))?.find(img => img.name === image.name);
+          return updated || image;
+        })
+        : image;
       });
     }
   }, [isDetectOpen]);
+
   const [object_detection, setObjectDetection] = useState(false);
   const [detecting, setDetecting] = useState(false);
   const handleDetectionComplete = async ({ canvas, count }) => {
@@ -75,10 +80,12 @@ const ImageCard = ({ image, refreshImages }) => {
         });
         refreshImages();
         // setObjectDetection(false);
-      } else {
+      } 
+      else {
         throw new Error(res.message);
       }
-    } catch (err) {
+    } 
+    catch (err) {
       toast({
         title: "Detection Upload Failed",
         description: err.message,
@@ -86,14 +93,11 @@ const ImageCard = ({ image, refreshImages }) => {
         duration: 4000,
         isClosable: true,
       });
-    } finally {
+    } 
+    finally {
       setDetecting(false);
     }
   };
-
-  const [updatedName, setUpdatedName] = useState(image.name);
-  const [newFile, setNewFile] = useState(null);
-  const fileInputRef = useRef();
 
   const handleDelete = async () => {
     const res = await deleteImage(image.name, token);
@@ -107,6 +111,9 @@ const ImageCard = ({ image, refreshImages }) => {
     refreshImages();
   };
 
+  const [updatedName, setUpdatedName] = useState(image.name);
+  const [newFile, setNewFile] = useState(null);
+  const fileInputRef = useRef();
   const handleUpdate = async () => {
     if (!updatedName.trim()) {
       toast({
@@ -158,7 +165,8 @@ const ImageCard = ({ image, refreshImages }) => {
       refreshImages();
       onClose();
       setNewFile(null);
-    } catch (error) {
+    } 
+    catch (error) {
       toast({
         title: "Update failed",
         description: error.message,
@@ -192,7 +200,12 @@ const ImageCard = ({ image, refreshImages }) => {
       {/* Update Modal */}
       <Modal isOpen={isOpen} onClose={() => { onClose(); setUpdatedName(image.name); setNewFile(null); }} isCentered>
         <ModalOverlay backdropFilter="blur(10px)" />
-        <ModalContent maxW="fit-content" alignItems="center" bg="lightgrey" borderRadius="20px" fontFamily="Montserrat, sans-serif" px={8} py={4} color="black">
+        <ModalContent maxW="fit-content" alignItems="center" bg="lightgrey" borderRadius="20px" fontFamily="Montserrat, sans-serif" px={8} py={4} color="black" 
+          as="form"  // ✅ Make modal content a form
+          onSubmit={(e) => {
+          e.preventDefault(); // ✅ Prevent page reload
+          handleUpdate();     // ✅ Call update handler
+          }}>
           <ModalCloseButton color="black" size="md" />
           <ModalHeader>
             <Text fontWeight="bold" fontSize="1.2em" color="black">Update Image</Text>
@@ -213,87 +226,106 @@ const ImageCard = ({ image, refreshImages }) => {
             </VStack>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleUpdate} isDisabled={updatedName === image.name && !newFile}>Update</Button>
+            <Button colorScheme="blue" mr={3} isDisabled={updatedName === image.name && !newFile} type="submit">Update</Button>
             <Button variant="ghost" color="black" _hover={{ bg: "gray.200" }} onClick={() => { onClose(); setUpdatedName(image.name); setNewFile(null); }}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
 
       {/* Object Detection Modal */}
-        <Modal isOpen={isDetectOpen} onClose={onDetectClose} isCentered>
-            <ModalOverlay backdropFilter="blur(10px)" />
-            <ModalContent
-                maxW="fit-content"
-                alignItems="center"
-                bg="lightgrey"
-                borderRadius="20px"
-                fontFamily="Montserrat, sans-serif"
-                px={4}
-                py={4}
-                color="black"
-                >
-                <ModalCloseButton color="black" size="md" />
-                <ModalHeader>
-                    <Text fontWeight="bold" fontSize="1.2em" color="black">Object Detection</Text>
-                </ModalHeader>
-                <ModalBody>
-                    <HStack justifyContent="center" spacing={4}>
-                        <Box
-                            border="4px solid black"
-                            h="25rem"
-                            w="45rem"
-                            justifyContent="center"
-                            alignItems="center"
-                            display="flex"
-                            >
-                            <Image src={image.url} alt={image.name} h="24rem" objectFit="scaledown" />
-                        </Box>
+      <Modal isOpen={isDetectOpen} onClose={onDetectClose} isCentered size="xl">
+  <ModalOverlay backdropFilter="blur(10px)" />
+  <ModalContent
+    maxW="95vw"
+    alignItems="center"
+    bg="lightgrey"
+    borderRadius="20px"
+    fontFamily="Montserrat, sans-serif"
+    px={{ base: 2, md: 4 }}
+    py={4}
+    color="black"
+  >
+    <ModalCloseButton color="black" size="md" />
+    <ModalHeader>
+      <Text fontWeight="bold" fontSize="120%" color="black">Object Detection</Text>
+    </ModalHeader>
 
-                        <Box
-                            border="4px solid black"
-                            h="25rem"
-                            w="45rem"
-                            justifyContent="center"
-                            alignItems="center"
-                            display="flex"
-                            >
-                            {image.res_url ? (
-                                <ObjectDetection image={{ ...image, url: image.res_url }} />
-                            ) : !object_detection ? (
-                                <Button
-                                colorScheme="teal"
-                                onClick={() => setObjectDetection(true)}
-                                isLoading={detecting}
-                                >
-                                Perform Object Detection
-                                </Button>
-                            ) : (
-                                <ObjectDetection
-                                image={image}
-                                onDetectionComplete={async (result) => {
-                                    await handleDetectionComplete(result);
-                                    setObjectDetection(false);        // close detection view
-                                }}
-                                />
-                            )}
-                        </Box>
-                    </HStack>
-                </ModalBody>
-                <ModalFooter>
-                    <Button
-                        variant="ghost"
-                        color="black"
-                        _hover={{ bg: "gray.200" }}
-                        onClick={() => {
-                        onDetectClose();
-                        setObjectDetection(false);             // reset detection view
-                        }}
-                        >
-                        Close
-                    </Button>
-                </ModalFooter>
-            </ModalContent>
-        </Modal>
+    <ModalBody width="100%">
+      <Flex
+        direction={{ base: "column", md: "row" }} // 🔄 Stack on mobile
+        justify="center"
+        align="center"
+        gap={4}
+        width="100%"
+      >
+        {/* Original Image */}
+        <Box
+          border="4px solid black"
+          w={{ base: "90%", md: "45%" }}
+          h="auto"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Image
+            src={image.url}
+            alt={image.name}
+            maxH="300px"
+            maxW="100%"
+            objectFit="contain"
+          />
+        </Box>
+
+        {/* Detection Result or Action */}
+        <Box
+          border="4px solid black"
+          w={{ base: "90%", md: "45%" }}
+          h="auto"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          p={2}
+        >
+          {image.res_url ? (
+            <ObjectDetection image={{ ...image, url: image.res_url }} />
+          ) : !object_detection ? (
+            <Button
+              colorScheme="teal"
+              onClick={() => setObjectDetection(true)}
+              isLoading={detecting}
+              w="fit-content"
+              fontSize="sm"
+            >
+              Perform Object Detection
+            </Button>
+          ) : (
+            <ObjectDetection
+              image={image}
+              onDetectionComplete={async (result) => {
+                await handleDetectionComplete(result);
+                setObjectDetection(false);
+              }}
+            />
+          )}
+        </Box>
+      </Flex>
+    </ModalBody>
+
+    <ModalFooter>
+      <Button
+        variant="ghost"
+        color="black"
+        _hover={{ bg: "gray.200" }}
+        onClick={() => {
+          onDetectClose();
+          setObjectDetection(false);
+        }}
+      >
+        Close
+      </Button>
+    </ModalFooter>
+  </ModalContent>
+</Modal>
     </Box>
   );
 };

@@ -88,35 +88,64 @@ const ObjectDetection = ({ image, onDetectionComplete }) => {
   };
 
   return (
-    <Box display={"flex"} flexDirection="column" alignItems="center" justifyContent="center">
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      w="100%"
+    >
       {loading && (
         <Flex justify="center" align="center" mt={4}>
           <Spinner size="lg" color="teal.500" />
-          {/* <Text ml={3}>Detecting objects...</Text> */}
         </Flex>
       )}
-      <HStack flexDirection="column" alignItems="center" justifyContent="center" mt={1}>
-      <canvas ref={canvasRef} style={{ display: loading ? "none" : "block", maxHeight: "25%", maxWidth: "45%" }} />
-      <img
-        ref={imageRef}
-        alt="Object Detection"
-        style={{ display: "none", height: "20px"}}
-        crossOrigin="anonymous"
-      />
-
-      {!loading && (
-        <HStack mt={4} spacing={4}>
-          <Text fontWeight="bold">
-            Detected: {image.res_url ? (image.res_count ?? 0) : detections.length} object(s)
-        </Text>
-          <Button onClick={downloadImage} colorScheme="teal">
-            Download Result Image
-          </Button>
-        </HStack>
-      )}
-      </HStack>
+  
+      <VStack spacing={4} mt={loading ? 4 : 0} width="100%">
+        {/* Result canvas */}
+        <canvas
+          ref={canvasRef}
+          style={{
+            display: loading ? "none" : "block",
+            maxWidth: "100%",
+            width: "100%",
+            height: "auto",
+            border: "1px solid #ccc",
+            borderRadius: "10px",
+          }}
+        />
+  
+        {/* Hidden image used by TensorFlow */}
+        <img
+          ref={imageRef}
+          alt="Object Detection"
+          style={{ display: "none" }}
+          crossOrigin="anonymous"
+        />
+  
+        {!loading && (
+          <Flex
+            justify="center"
+            align="center"
+            wrap="wrap"
+            gap={4}
+            mt={2}
+            direction={{ base: "column", sm: "row" }}
+          >
+            <Text fontWeight="bold" fontSize="md" textAlign="center">
+              Detected:{" "}
+              {image.res_url ? (image.res_count ?? 0) : detections.length} object(s)
+            </Text>
+  
+            <Button onClick={downloadImage} colorScheme="teal" size="sm">
+              <Text fontSize="sm">Download Result Image</Text>
+            </Button>
+          </Flex>
+        )}
+      </VStack>
     </Box>
   );
+  
 };
 
 export default ObjectDetection;

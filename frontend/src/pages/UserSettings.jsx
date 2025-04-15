@@ -68,7 +68,7 @@ function UserSettings() {
         <Flex 
             direction="column"
             minH="100vh"
-            minW="100vw"
+            minW="99vw"
             fontFamily="Montserrat, sans-serif"
             bgImage="url(https://dcm-datalabs.s3.us-east-2.amazonaws.com/images/RADAR.png)"
             bgSize="cover"
@@ -77,8 +77,7 @@ function UserSettings() {
             py={0}
             >
             <Flex
-                border="1px solid white"
-                borderRadius="10px"
+                borderBottom="1px solid white"
                 alignItems="center"
                 bg="grey"
                 justifyContent="space-between"
@@ -137,7 +136,6 @@ function UserSettings() {
                 alignItems="center"
                 px={6}
                 py={4}
-                borderRadius="10px"
                 bg="white"
                 >
                 <Box
@@ -242,18 +240,20 @@ function UserSettings() {
                 </Box>
             </Flex>
 
-            {/* Footer */}
+           {/* Footer */}
             <Flex
-                position="fixed"
+                bg={'white'}
                 justifyContent={"flex-end"}
-                bottom="1%"
-                right="1%"
+                px={2}
+                w={'99vw'}
                 >
                 <Text 
-                    color="black"> powered by dcmdatalabs </Text>
+                    color="black"> powered by dcmdatalabs 
+                </Text>
             </Flex>
+
         </Flex>
-);
+    );
 }
 
 export default UserSettings;

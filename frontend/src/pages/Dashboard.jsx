@@ -1,13 +1,23 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronDownIcon, DownloadIcon } from "@chakra-ui/icons";
+
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import { FiSettings, FiLogOut } from "react-icons/fi";
 import { HiUpload } from "react-icons/hi";
-import { Avatar, Box, Button, Flex, HStack, Input, Menu, MenuButton, MenuList, MenuItem, Text, FormControl, FormLabel, VStack, useToast, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalHeader, ModalBody, useDisclosure, SimpleGrid } from "@chakra-ui/react";
-import ObjectDetection from "../components/ObjectDetection.jsx";
+
+import {    Avatar, 
+            Box, Button, 
+            Flex, FormControl, FormLabel, 
+            HStack, 
+            Input, 
+            Menu, MenuButton, MenuList, MenuItem, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalHeader, ModalBody, 
+            SimpleGrid,
+            Text, 
+            useToast, useDisclosure,
+            VStack } from "@chakra-ui/react";
+
 import { logoutUser, uploadUserImage, getUserImages } from "../services/authService.js";
 import ImageCard from "../components/ImageCard.jsx";
-import obj_logo from "../assets/obj_detect_logo.png";
 
 function Dashboard() {
     const storedUser = JSON.parse(sessionStorage.getItem("user"));
@@ -137,7 +147,9 @@ function Dashboard() {
                     RADAR
                 </Box>
                 
-                <Menu>
+                <Menu
+                    color={"white"}
+                    >
                     <MenuButton
                         as={Button}
                         variant="ghost"
@@ -158,6 +170,7 @@ function Dashboard() {
                     <MenuList 
                         minW="unset"
                         bg={"gray"}
+                        
                         >
                         <MenuItem
                             bg={"gray"}
@@ -200,6 +213,8 @@ function Dashboard() {
                     fontFamily={'Montserrat, sans-serif'}
                     px={8}
                     py={4}
+                    as="form"
+                    onSubmit={handleUpload}
                     >
                     <ModalCloseButton 
                         color={'black'}
@@ -240,7 +255,7 @@ function Dashboard() {
 
                             </FormControl>
                             <FormControl>
-                                <FormLabel color={'black'} fontSize={'1em'}>No need to provide extension</FormLabel>
+                                <FormLabel color={'black'} fontSize={'1em'}>No need to provide file extension</FormLabel>
                                 <Input 
                                     type="text"
                                     bg={"white"}
@@ -258,7 +273,7 @@ function Dashboard() {
                                 bg='lightgray'
                                 color='black' 
                                 mt={4} 
-                                onClick={handleUpload}
+                                type="submit"
                                 >
                                 Upload Image
                             </Button>
@@ -329,21 +344,10 @@ function Dashboard() {
                 bg={'white'}
                 justifyContent={"flex-end"}
                 px={1}
-                direction={"row"}
                 >
                 <Text 
                     color="black"> powered by dcmdatalabs 
                 </Text>
-{/* 
-                <Box
-                    height={"100px"}
-                    width={"100px"}
-                    bgRepeat={"no-repeat"}
-                    style={{
-                        backgroundImage: `url(${obj_logo})`}}
-                    >
-
-                </Box> */}
             </Flex>
 
         </Flex>
