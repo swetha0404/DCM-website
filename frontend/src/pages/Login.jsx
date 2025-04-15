@@ -273,12 +273,12 @@ function Login() {
         
         {/* Sign up box (popup modal)  */}
         <Modal 
-                isOpen = {isOpen} 
-                onClose={onClose} 
-                blockScrollOnMount= {false}
-                transition={"all 0.3s"}
-                isCentered
-                >
+            isOpen = {isOpen} 
+            onClose={onClose} 
+            blockScrollOnMount= {false}
+            transition={"all 0.3s"}
+            isCentered
+            >
             <ModalOverlay   
                     backdropFilter="blur(10px)"
                             
