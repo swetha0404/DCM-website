@@ -460,14 +460,11 @@ function Login() {
 
         </Modal>
         <Flex   
-                
-                justifyContent={"flex-end"}
-                mt={'1em'}
-        >
-            <Text    
-                position={'absolute'}
-                color={'white'}
+            justifyContent={"flex-end"}
             >
+            <Text    
+                color={'white'}
+                >
                 powered by dcmdatalabs
             </Text>
         </Flex>

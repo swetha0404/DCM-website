@@ -170,13 +170,14 @@ function Dashboard() {
                     <MenuList 
                         minW="unset"
                         bg={"gray"}
-                        
+                        color={"white"}
                         >
                         <MenuItem
                             bg={"gray"}
                             _hover={{ bg: "gray.500" }}
                             icon={<FiSettings />}
                             onClick={() => navigate("/settings")}
+                            color={"white"}
                             >
                             Account Settings
                         </MenuItem>
@@ -185,6 +186,7 @@ function Dashboard() {
                             _hover={{ bg: "gray.500" }}
                             icon={<FiLogOut />}
                             onClick={handleLogout}
+                            color={"white"}
                             >
                             Logout
                         </MenuItem>
