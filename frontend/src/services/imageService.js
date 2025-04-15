@@ -1,5 +1,7 @@
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+console.log("API Base:", API_BASE);
+
 /**
  * Upload object detection result image to S3 and update res_url + res_count in DB
  * @param {FormData} formData - Includes result image file + imageName + count

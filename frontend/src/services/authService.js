@@ -1,5 +1,6 @@
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+console.log("API Base:", API_BASE);
 
 /** Login with identifier (email or username) + password */
 export const loginUser = async (credentials) => {
