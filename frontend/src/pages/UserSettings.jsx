@@ -109,6 +109,7 @@ function UserSettings() {
                     <MenuList
                         minW="165px"
                         bg={"gray"}
+                        color={"white"}
                         >
                         <MenuItem
                             bg={"gray"}
@@ -123,6 +124,7 @@ function UserSettings() {
                             _hover={{ bg: "gray.500" }}
                             icon={<FiLogOut />}
                             onClick={handleLogout}
+                            color={"white"}
                             >
                             Logout
                         </MenuItem>
@@ -244,8 +246,7 @@ function UserSettings() {
             <Flex
                 bg={'white'}
                 justifyContent={"flex-end"}
-                px={2}
-                w={'99vw'}
+                px={1}
                 >
                 <Text 
                     color="black"> powered by dcmdatalabs 
